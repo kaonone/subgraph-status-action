@@ -1,6 +1,6 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Subgraph status action'
+description: 'Github Action for checking errors in the subgraphs'
+author: 'akropolis.io'
 inputs:
   milliseconds: # change this
     required: true
