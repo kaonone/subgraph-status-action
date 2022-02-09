@@ -15,10 +15,31 @@ jobs:
           yarn
       - run: |
           yarn all
-  test: # make sure the action works on a clean machine without building
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
+
+      - name: Get subgraph status
+        id: check
+        uses: ./
         with:
-          milliseconds: 1000
+          subgraph: in19farkt/starknet-bridge-staging
+
+      - name: Do something if subgraph failed
+        if: ${{ fromJSON(steps.check.outputs.hasError) }}
+        run: |
+          echo 'Error code ${{ steps.check.outputs.errorCode }}'
+          echo 'Message ${{ steps.check.outputs.message }}'
+        env:
+          ERROR_CODE: ${{ steps.check.outputs.errorCode }}
+          ERROR_MESSAGE: ${{ steps.check.outputs.message }}
+
+      - name: Do something if subgraph healthy
+        if: ${{ !fromJSON(steps.check.outputs.hasError) }}
+        run: |
+          echo 'Chain head block ${{ steps.check.outputs.chainHeadBlock }}'
+          echo 'Latest synced block ${{ steps.check.outputs.latestBlock }}'
+        env:
+          CHAIN_HEAD_BLOCK: ${{ steps.check.outputs.chainHeadBlock }}
+          LATEST_BLOCK: ${{ steps.check.outputs.latestBlock }}

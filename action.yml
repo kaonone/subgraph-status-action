@@ -2,10 +2,17 @@ name: 'Subgraph status action'
 description: 'Github Action for checking errors in the subgraphs'
 author: 'akropolis.io'
 inputs:
-  milliseconds: # change this
+  subgraph:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Subgraph name for check'
+  version:
+    required: false
+    description: 'The subgraph version for check. Should be "current" or "pending"'
+    default: 'current'
+  fail_on_error:
+    required: false
+    description: 'The job will fail if passed `true` and the subgraph has indexing errors'
+    default: 'false'
 runs:
   using: 'node12'
   main: 'dist/index.js'
