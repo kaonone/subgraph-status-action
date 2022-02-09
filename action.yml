@@ -1,6 +1,9 @@
 name: 'Subgraph status action'
-description: 'Github Action for checking errors in the subgraphs'
+description: 'Github Action for checking indexing errors in the subgraphs'
 author: 'akropolis.io'
+branding:
+  icon: 'activity'
+  color: 'purple'
 inputs:
   subgraph:
     required: true
