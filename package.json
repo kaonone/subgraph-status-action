@@ -1,6 +1,6 @@
 {
   "name": "subgraph-status-action",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Github Action for checking errors in the subgraphs",
   "main": "lib/main.js",
