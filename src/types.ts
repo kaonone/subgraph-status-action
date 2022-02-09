@@ -15,26 +15,28 @@ export type ActionErrorOutput = {
 export type GqlResponse = GqlSuccessfulResponse | GqlErrorResponse
 
 type GqlSuccessfulResponse = {
-  data: Record<
-    'indexingStatusForCurrentVersion' | 'indexingStatusForPendingVersion',
-    {
-      synced: Scalars['Boolean']
-      health: Health
-      fatalError?: Maybe<{
-        block?: Maybe<Block>
-        handler?: Maybe<Scalars['String']>
-        message: Scalars['String']
-      }>
-      chains: {
-        chainHeadBlock?: Maybe<{
-          number: Scalars['BigInt']
-        }>
-        latestBlock?: Maybe<{
-          number: Scalars['BigInt']
-        }>
-      }[]
-    }
-  >
+  data: {
+    indexingStatusForCurrentVersion: StatusResponse
+    indexingStatusForPendingVersion?: StatusResponse | null
+  }
+}
+
+type StatusResponse = {
+  synced: Scalars['Boolean']
+  health: Health
+  fatalError?: Maybe<{
+    block?: Maybe<Block>
+    handler?: Maybe<Scalars['String']>
+    message: Scalars['String']
+  }>
+  chains: {
+    chainHeadBlock?: Maybe<{
+      number: Scalars['BigInt']
+    }>
+    latestBlock?: Maybe<{
+      number: Scalars['BigInt']
+    }>
+  }[]
 }
 
 type GqlErrorResponse = {

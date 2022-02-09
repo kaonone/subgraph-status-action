@@ -26,7 +26,25 @@ async function run(): Promise<void> {
       return
     }
 
-    const {fatalError, chains} = response.data[getGqlQueryName(version)]
+    const statusData = response.data[getGqlQueryName(version)]
+
+    if (!statusData) {
+      if (version === 'pending') {
+        const output: ActionSuccessfulOutput = {
+          hasError: false,
+          chainHeadBlock: null,
+          latestBlock: null
+        }
+        setOutputs(output)
+        return
+      }
+
+      throw new Error(
+        `The Graph index node did not find the current version of the subgraph "${subgraphName}"`
+      )
+    }
+
+    const {fatalError, chains} = statusData
     const hasIndexingError = !!fatalError
 
     if (hasIndexingError) {
